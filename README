@@ -1,0 +1,52 @@
+
+== Tool for bulk scanning of malware ==
+
+I needed to rescan my large collection of malware with free anti virus products.
+This is a python wrapper that calls the ClamAV process to produce a json report.
+You can then insert the JSON report into a DynamoDB or Postgresql database, I will provide a separate script for that.
+
+== ClamAv ==
+
+usage: clamav.py [-h] [--version] [--scan] [--folder FOLDER]
+                 [--detections DETECTIONS] [--merge] [--recursive]
+                 [--batchsize BATCHSIZE] [--newline]
+
+Scan an entire folder with ClamAv
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             Display Clam version
+  --scan                Scan a folder
+  --folder FOLDER       Folder with virus samples
+  --detections DETECTIONS
+                        Folder with the output of the scan
+  --merge               Merge previous scans
+  --recursive           Scan all files with nested folders
+  --batchsize BATCHSIZE
+                        Batch scanning in groups
+  --newline             Use new lines in json output
+
+I have a folder full of malware samples
+./clamav.py --scan --folder /mnt/d/viruses/folder --batchsize 150 --detections /mnt/d/detections/folder
+
+The batchsize will depend on your CPU and RAM, in my case 150 works pretty well.
+If you want to stop the process you can just hit CTRL+C, a state file will remember which files you scanned so it can
+continue later.
+
+If you want to merge all your reports:
+./clamav.py --merge --detections /mnt/d/detections/folder --newline
+
+This will produce a file called merged_[timestamp].json with all the detections combined from that folder.
+The merge process for each hash takes the most recent signature timestamp.
+The filenames of your virus samples needs to contain a form of hash either md5,sha1,sha256.
+
+There is an example output in the data folder.
+
+Requirements:
+* Python 3.6
+* ClamAV
+
+Tested:
+* Ubuntu Linux
+
+
