@@ -40,13 +40,24 @@ This will produce a file called merged_[timestamp].json with all the detections 
 The merge process for each hash takes the most recent signature timestamp.
 The filenames of your virus samples needs to contain a form of hash either md5,sha1,sha256.
 
-There is an example output in the data folder.
-
-Requirements:
-* Python 3.6
-* ClamAV
+There is an example output in the clamav folder.
 
 Tested:
 * Ubuntu Linux
+
+== Windows Defender ==
+You can perform the same task:
+
+./defender.py --scan --folder D:\viruses\folder --batchsize 150 --detections D:\detections\folder
+
+There is an example output in the winav folder.
+
+Tested:
+* Windows 10
+
+== Requirements ==
+* Python 3.6
+* ClamAV
+
 
 

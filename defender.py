@@ -10,6 +10,13 @@ import argparse
 import datetime
 import hashlib
 
+__author__ = "Paolo Di Prodi"
+__copyright__ = "Copyright 2018, Paolo Di Prodi"
+
+__license__ = "Apache 2.0"
+__version__ = "0.99"
+__email__ = "contact [AT] logstotal.com"
+
 STATE_FOLDER = os.path.join('progress','defender')
 
 os.makedirs(STATE_FOLDER,exist_ok=True)
