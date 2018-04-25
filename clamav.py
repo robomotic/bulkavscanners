@@ -14,7 +14,10 @@ import argparse
 import os
 import tempfile
 
-STATE_FOLDER = 'progress'
+STATE_FOLDER = os.path.join('progress','defender')
+
+os.makedirs(STATE_FOLDER,exist_ok=True)
+
 LOG_FOLDER = 'logs'
 
 os.makedirs(LOG_FOLDER,exist_ok=True)
@@ -223,7 +226,8 @@ class ClamAvProcessor():
                                 if hashlen != None:
                                     reports.append( {hashlen: value, "clamav": family,
                                                      "version": self.version,"build":self.build,
-                                                     'signatureTime':self.signatureDate.isoformat()})
+                                                     'signatureTime':self.signatureDate.isoformat(),
+                                                     'scanTime':datetime.datetime.utcnow()})
 
                                     detected.append(filepath)
                                 else:
@@ -237,7 +241,8 @@ class ClamAvProcessor():
                     if hashlen !=None and value != None:
                         reports.append( {hashlen: value, "clamav": '',
                                          "version": self.version,"build":self.build,
-                                         'signatureTime':self.signatureDate.isoformat()} )
+                                         'signatureTime':self.signatureDate.isoformat(),
+                                         'scanTime': datetime.datetime.utcnow()} )
                     else:
                         logging.error("Unable to find hash for filename %s" % os.path.basename(filepath))
                 # add to the state
